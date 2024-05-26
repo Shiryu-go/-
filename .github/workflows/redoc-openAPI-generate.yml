@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-      - run: npx -y @redocly/cli build-docs 外部設計/API定義/OpenAPI.yml -o githubPages/redocly-openAPI.html
+      - run: npx -y @redocly/cli build-docs 外部設計/API定義/OpenAPI.yml -o docs/redocly-openAPI.html
       - name: Configure Git
         run: |
           git config --global user.name 'github-actions[bot]'
@@ -25,7 +25,7 @@ jobs:
 
       - name: Commit changes
         run: |
-          git add --sparse githubPages/redocly-openAPI.html
+          git add --sparse docs/redocly-openAPI.html
           git commit -m 'Auto-generate Redoc HTML from OpenAPI spec'
 
       - name: Push changes
