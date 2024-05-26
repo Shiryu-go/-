@@ -1,5 +1,8 @@
 name: Build redocly HTML file
-on: push
+on: 
+  push : 
+    branches: [main]
+    paths : 外部設計/API定義/OpenAPI.yml
 permissions:
   contents: read
 jobs:
@@ -13,8 +16,19 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: npx -y @redocly/cli build-docs 外部設計/API定義/OpenAPI.yml -o output/redocly-static.html
-      - uses: actions/upload-artifact@v3
+      - run: npx -y @redocly/cli build-docs 外部設計/API定義/OpenAPI.yml -o githubPages/redocly-openAPI.html
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Commit changes
+        run: |
+          git add githubPages/redocly-openAPI.html
+          git commit -m 'Auto-generate Redoc HTML from OpenAPI spec'
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
         with:
-          name: redocly-html
-          path: output/redocly-static.html
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
