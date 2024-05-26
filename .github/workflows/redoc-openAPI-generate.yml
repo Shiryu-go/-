@@ -5,7 +5,7 @@ on:
     paths : 外部設計/API定義/OpenAPI.yml
   workflow_dispatch: # 手動実行用の設定項目
 permissions:
-  contents: read
+  contents: write
 jobs:
   run-redocly-cli:
     runs-on: ubuntu-latest
