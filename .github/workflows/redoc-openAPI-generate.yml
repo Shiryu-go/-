@@ -16,7 +16,7 @@ jobs:
           sparse-checkout-cone-mode: false
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - run: npx -y @redocly/cli build-docs 外部設計/API定義/OpenAPI.yml -o githubPages/redocly-openAPI.html
       - name: Configure Git
         run: |
@@ -25,7 +25,7 @@ jobs:
 
       - name: Commit changes
         run: |
-          git add githubPages/redocly-openAPI.html
+          git add --sparse githubPages/redocly-openAPI.html
           git commit -m 'Auto-generate Redoc HTML from OpenAPI spec'
 
       - name: Push changes
