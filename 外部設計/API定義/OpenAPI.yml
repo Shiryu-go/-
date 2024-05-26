@@ -1,0 +1,97 @@
+openapi: '3.0.2'
+info:
+  title: test API
+  description: "欲しいものリスト用のOpenAPI✌️😀🤚\
+                まだWIP（形だけだよ）"
+  
+  x-java-version: 17
+
+  termsOfService: https://example.com/terms/ #利用規約
+  contact:
+    name: API Support #サポートページ
+    url: https://www.example.com/support #サポートURL
+    email: support@example.com #サポート用メールアドレス
+  license:
+    name: Apache 2.0 #このAPIのライセンス
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: '0.1'
+
+servers:
+- url: "http://localhost:8080" #バージョン情報をここに入れるべきです。
+  description: "ローカル環境のSpringデフォルト値 現在はHTMLサーバになっている。"
+
+- url: "http://localhost:8080/api" #バージョン情報をここに入れるべきです。
+  description: "バックエンドAPI用のURL"
+
+- url: "http://sample.com"
+  description: "本番環境ですわよ✌️！!"
+  
+tags:
+  - name: "users"
+    description: "ユーザー!!"
+
+paths: #pathというのは、上の基本のURLに付属するURLを指定するという意味があります。
+####################APIInfo#####################
+
+  /top:
+    post:
+      summary: 友達情報の登録
+      tags: [users]
+      operationId: "friend Resister"
+      parameters:
+        - name: user_id
+          in: query
+          description: user_id
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+              example : 111
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: 
+                  type: string
+                  example: 日本太郎
+                email:
+                  type: string
+                  example: example@example.com
+                  format: email
+      responses:
+        "200":
+          description: "ユーザー登録完了"
+
+  /info:
+    post:
+      summary: 詳細情報
+      tags: [users]
+      operationId: "friend list view"
+      parameters:
+        - name: user_id
+          in: query
+          description: user_id
+          required: true
+          schema:
+            type: array
+            items:
+              type: integer
+              example : 11111
+      responses:
+        200:
+          description: "詳細情報を返す"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: "日本昔話太郎"
+             
