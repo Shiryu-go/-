@@ -33,65 +33,43 @@ tags:
 paths: #pathというのは、上の基本のURLに付属するURLを指定するという意味があります。
 ####################APIInfo#####################
 
-  /top:
+  /list/{listId}:
     post:
-      summary: 友達情報の登録
-      tags: [users]
-      operationId: "friend Resister"
+      summary: 欲しいものリストを取得する
+      operationId: "get wish list"
       parameters:
-        - name: user_id
-          in: query
-          description: user_id
+        - name: listId
+          in : path
+          description : "パスパラメータに含めることで、リストの共有がしやすくなる。"
           required: true
           schema:
-            type: array
-            items:
-              type: integer
-              example : 111
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name: 
-                  type: string
-                  example: 日本太郎
-                email:
-                  type: string
-                  example: example@example.com
-                  format: email
-      responses:
-        "200":
-          description: "ユーザー登録完了"
-
-  /info:
-    post:
-      summary: 詳細情報
-      tags: [users]
-      operationId: "friend list view"
-      parameters:
-        - name: user_id
-          in: query
-          description: user_id
+            type: string
+        - name: Authorization
+          in: header
+          description: Bearerトークン
           required: true
           schema:
-            type: array
-            items:
-              type: integer
-              example : 11111
+            type: string
+            format: jwt
       responses:
-        200:
-          description: "詳細情報を返す"
+        '200':
+          description: 成功。リストの内容を返します。
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
+                type: object
+                properties:
+                  listId:
+                    type: string
+                    description: リストのID
+                  items:
+                    type: array
+                    items:
                       type: string
-                      example: "日本昔話太郎"
-             
+                    description: リストに含まれるアイテムのリスト
+        '401':
+          description: 認証エラー。アクセストークンが無効です。
+        '404':
+          description: 指定されたIDのリストが見つかりません。
+
+  
