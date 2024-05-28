@@ -34,7 +34,7 @@ paths: #pathというのは、上の基本のURLに付属するURLを指定す�
 ####################APIInfo#####################
 
   /list/{listId}:
-    post:
+    get:
       summary: 欲しいものリストを取得する
       operationId: "get wish list"
       parameters:
@@ -50,7 +50,6 @@ paths: #pathというのは、上の基本のURLに付属するURLを指定す�
           required: true
           schema:
             type: string
-            format: jwt
       responses:
         '200':
           description: 成功。リストの内容を返します。
@@ -68,7 +67,7 @@ paths: #pathというのは、上の基本のURLに付属するURLを指定す�
                       type: string
                     description: リストに含まれるアイテムのリスト
                 example:
-                  listId: "abcdef123456"
+                  listId: abcdef123456
                   items:
                     - id: 1
                       name: "iPhone 13 Pro"
@@ -83,5 +82,7 @@ paths: #pathというのは、上の基本のURLに付属するURLを指定す�
           description: 認証エラー。アクセストークンが無効です。
         '404':
           description: 指定されたIDのリストが見つかりません。
+  
+    
 
   
