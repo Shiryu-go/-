@@ -15,7 +15,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           cache: "npm"
-
+      - name: npm install
+        run: npm install 
       - name: Install spectral
         run: npm ci
 
