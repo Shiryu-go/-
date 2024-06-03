@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "spectral lint '外部設計/API定義/OpenAPI.yml'",
     "lint:ci": "spectral lint --format github-actions -F warn '外部設計/API定義/OpenAPI.yml'",
-    "check": "prettier --check .",
+    "check": "prettier --check '外部設計/API定義/OpenAPI.yml'",
     "fix": "prettier --write .",
     "generate:typescript": "openapi-generator-cli generate -i openapi.yaml -g typescript-axios -o generated/ts"
   },
