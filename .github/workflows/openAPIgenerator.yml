@@ -1,53 +1,53 @@
 name: Generate Spring Boot Code from OpenAPI Spec
 
-on: 
-  push : 
+on:
+  push:
     branches: [docs]
-    paths : 外部設計/API定義/OpenAPI.yml
+    paths: 外部設計/API定義/OpenAPI.yml
   workflow_dispatch: # 手動実行用の設定項目
 permissions:
   contents: write
-  
+
 jobs:
   generate-springboot:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-    
-    - name: Install OpenAPI Generator
-      run: |
-        wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.0.1/openapi-generator-cli-6.0.1.jar -O openapi-generator-cli.jar
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: "11"
+          distribution: "adopt"
 
-    - name: Generate Spring Boot code
-      run: |
-        java -jar openapi-generator-cli.jar generate -i path/to/your/openapi.yaml -g spring -o generated-code
-    
-    - name: Commit and push generated code to new branch
-      run: |
-        BRANCH_NAME=generated-code-$(date +%Y%m%d%H%M%S)
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git checkout -b $BRANCH_NAME
-        git add generated-code
-        git commit -m 'Generate Spring Boot code from OpenAPI spec'
-        git push origin $BRANCH_NAME
-        env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v5
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: 'Generate Spring Boot code from OpenAPI spec'
-        branch: ${{ steps.generate-springboot.outputs.BRANCH_NAME }}
-        base: main
-        title: 'Generate Spring Boot code from OpenAPI spec'
-        body: 'This PR was automatically created by GitHub Actions to generate Spring Boot code from the OpenAPI spec.'
+      - name: Install OpenAPI Generator
+        run: |
+          wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.0.1/openapi-generator-cli-6.0.1.jar -O openapi-generator-cli.jar
+
+      - name: Generate Spring Boot code
+        run: |
+          java -jar openapi-generator-cli.jar generate -i path/to/your/openapi.yaml -g spring -o generated-code
+
+      - name: Commit and push generated code to new branch
+        run: |
+          BRANCH_NAME=generated-code-$(date +%Y%m%d%H%M%S)
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b $BRANCH_NAME
+          git add generated-code
+          git commit -m 'Generate Spring Boot code from OpenAPI spec'
+          git push origin $BRANCH_NAME
+          env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Generate Spring Boot code from OpenAPI spec"
+          branch: ${{ steps.generate-springboot.outputs.BRANCH_NAME }}
+          base: main
+          title: "Generate Spring Boot code from OpenAPI spec"
+          body: "This PR was automatically created by GitHub Actions to generate Spring Boot code from the OpenAPI spec."
