@@ -6,11 +6,10 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "lint": "spectral lint 'openapi.yaml'",
-    "lint:ci": "spectral lint --format github-actions -F warn 'openapi.yaml'",
+    "lint": "spectral lint '外部設計/API定義/OpenAPI.yml'",
+    "lint:ci": "spectral lint --format github-actions -F warn '外部設計/API定義/OpenAPI.yml'",
     "check": "prettier --check .",
     "fix": "prettier --write .",
-    "build": "redocly build-docs -o ./dist/index.html ./openapi.yaml",
     "generate:typescript": "openapi-generator-cli generate -i openapi.yaml -g typescript-axios -o generated/ts"
   },
   "devDependencies": {
