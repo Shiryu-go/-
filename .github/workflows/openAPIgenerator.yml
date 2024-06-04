@@ -30,11 +30,15 @@ jobs:
         run: |
           java -jar openapi-generator-cli.jar generate -i 外部設計/API定義/OpenAPI.yml -g spring -o generated-code
 
+      - name: Set branch name
+        id: set-branch-name
+        run: echo "::set-output name=branch::generated-code-$(date +%Y%m%d%H%M%S)"
+
       - name: Commit and push generated code to new branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BRANCH_NAME=generated-code-$(date +%Y%m%d%H%M%S)
+          BRANCH_NAME=${{ steps.set-branch-name.outputs.branch }}
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git checkout -b $BRANCH_NAME
@@ -47,7 +51,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Generate Spring Boot code from OpenAPI spec"
-          branch: ${{ steps.generate-springboot.outputs.BRANCH_NAME }}
+          branch:${{ steps.set-branch-name.outputs.branch }}
           base: main
           title: "Generate Spring Boot code from OpenAPI spec"
           body: "This PR was automatically created by GitHub Actions to generate Spring Boot code from the OpenAPI spec."
