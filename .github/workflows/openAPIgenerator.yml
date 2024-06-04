@@ -31,6 +31,8 @@ jobs:
           java -jar openapi-generator-cli.jar generate -i 外部設計/API定義/OpenAPI.yml -g spring -o generated-code
 
       - name: Commit and push generated code to new branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           BRANCH_NAME=generated-code-$(date +%Y%m%d%H%M%S)
           git config --global user.name 'github-actions[bot]'
@@ -38,9 +40,6 @@ jobs:
           git checkout -b $BRANCH_NAME
           git add generated-code
           git commit -m 'Generate Spring Boot code from OpenAPI spec'
-          git push origin $BRANCH_NAME
-          env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
