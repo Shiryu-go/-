@@ -1,8 +1,8 @@
 name: Build redocly HTML file
-on: 
-  push : 
+on:
+  push:
     branches: [main]
-    paths : 外部設計/API定義/OpenAPI.yml
+    paths: 外部設計/API定義/OpenAPI.yml
   workflow_dispatch: # 手動実行用の設定項目
 permissions:
   contents: write

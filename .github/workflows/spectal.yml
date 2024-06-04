@@ -1,0 +1,26 @@
+name: spectral
+
+on:
+  push:
+    branches:
+      - docs
+    paths: 外部設計/API定義/OpenAPI.yml
+    workflow_dispatch: # 手動実行用の設定項目
+  pull_request: ~
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: npm install
+        run: npm install
+      - uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+
+      - name: Install spectral
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint:ci

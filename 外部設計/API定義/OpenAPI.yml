@@ -1,9 +1,9 @@
-openapi: '3.0.2'
+openapi: "3.0.2"
 info:
   title: test API
-  description: "欲しいものリスト用のOpenAPI✌️😀🤚\
-                まだWIP（形だけだよ）"
-  
+  description: "欲しいものリスト用のOpenAPI😀🤚\
+    まだWIP（形だけだよ）"
+
   x-java-version: 17
 
   termsOfService: https://example.com/terms/ #利用規約
@@ -14,33 +14,38 @@ info:
   license:
     name: Apache 2.0 #このAPIのライセンス
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: '0.1'
+  version: "0.1"
 
 servers:
-- url: "http://localhost:8080" #バージョン情報をここに入れるべきです。
-  description: "ローカル環境のSpringデフォルト値 現在はHTMLサーバになっている。"
+  - url: "http://localhost:8080" #バージョン情報をここに入れるべきです。
+    description: "ローカル環境のSpringデフォルト値 現在はHTMLサーバになっている。"
 
-- url: "http://localhost:8080/api" #バージョン情報をここに入れるべきです。
-  description: "バックエンドAPI用のURL"
+  - url: "http://localhost:8080/api" #バージョン情報をここに入れるべきです。
+    description: "バックエンドAPI用のURL"
 
-- url: "http://sample.com"
-  description: "本番環境ですわよ✌️！!"
-  
+  - url: "http://sample.com"
+    description: "本番環境ですわよ✌️！!"
+
 tags:
   - name: "users"
     description: "ユーザー!!"
+  - name: wishList
+    description: 欲しいものリストの操作
 
 paths: #pathというのは、上の基本のURLに付属するURLを指定するという意味があります。
-####################APIInfo#####################
+  ####################APIInfo#####################
 
   /list/{listId}:
     get:
       summary: 欲しいものリストを取得する
-      operationId: "get wish list"
+      description: リストの共有にも使用できるlistIdを指定して、欲しいものリストを取得します。
+      operationId: getWishList
+      tags:
+        - wishList
       parameters:
         - name: listId
-          in : path
-          description : "パスパラメータに含めることで、リストの共有がしやすくなる。"
+          in: path
+          description: "パスパラメータに含めることで、リストの共有がしやすくなる。"
           required: true
           schema:
             type: string
@@ -51,7 +56,7 @@ paths: #pathというのは、上の基本のURLに付属するURLを指定す�
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: 成功。リストの内容を返します。
           content:
             application/json:
@@ -64,25 +69,31 @@ paths: #pathというのは、上の基本のURLに付属するURLを指定す�
                   items:
                     type: array
                     items:
-                      type: string
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        price:
+                          type: integer
                     description: リストに含まれるアイテムのリスト
-                example:
-                  listId: abcdef123456
-                  items:
-                    - id: 1
-                      name: "iPhone 13 Pro"
-                      price: 1099
-                    - id: 2
-                      name: "MacBook Pro 16\""
-                      price: 2399
-                    - id: 3
-                      name: "Sony WH-1000XM4 ワイヤレスノイズキャンセリングヘッドホン"
-                      price: 349
-        '401':
+                    example:
+                      - listId: abcdef123456
+                        items:
+                          - id: "0"
+                            name: "抹茶おれ"
+                            price: 150
+                          - id: "1"
+                            name: "iPhone 13 Pro"
+                            price: 1099
+                          - id: "2"
+                            name: 'MacBook Pro 16"'
+                            price: 2399
+                          - id: "3"
+                            name: "Sony WH-1000XM4 ワイヤレスノイズキャンセリングヘッドホン"
+                            price: 349
+        "401":
           description: 認証エラー。アクセストークンが無効です。
-        '404':
+        "404":
           description: 指定されたIDのリストが見つかりません。
-  
-    
-
-  

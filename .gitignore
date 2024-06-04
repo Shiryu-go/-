@@ -25,3 +25,4 @@ replay_pid*
 
 # エディタ関連ファイル
 .vscode/
+node_modules
