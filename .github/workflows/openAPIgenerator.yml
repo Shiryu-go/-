@@ -38,7 +38,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BRANCH_NAME=${{ steps.set-branch-name.outputs.branch }}
+          BRANCH_NAME= ${{ steps.set-branch-name.outputs.branch }}
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git checkout -b $BRANCH_NAME
@@ -51,7 +51,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Generate Spring Boot code from OpenAPI spec"
-          branch:${{ steps.set-branch-name.outputs.branch }}
+          branch: ${{ steps.set-branch-name.outputs.branch }}
           base: main
           title: "Generate Spring Boot code from OpenAPI spec"
           body: "This PR was automatically created by GitHub Actions to generate Spring Boot code from the OpenAPI spec."
