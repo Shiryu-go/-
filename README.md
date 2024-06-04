@@ -24,3 +24,6 @@ docker run -p 8000:8000 -v {$フルパス}/openapi.yml danielgtaylor/apisprout /
 TODO 多分ワンライナーで書ける
 
 以上でモックサーバーが建てられる。
+
+# lint/formatter
+package.json参照
