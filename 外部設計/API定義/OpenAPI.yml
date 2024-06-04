@@ -29,6 +29,8 @@ servers:
 tags:
   - name: "users"
     description: "ユーザー!!"
+  - name: wishList
+    description: 欲しいものリストの操作
 
 paths: #pathというのは、上の基本のURLに付属するURLを指定するという意味があります。
   ####################APIInfo#####################
@@ -36,7 +38,10 @@ paths: #pathというのは、上の基本のURLに付属するURLを指定す�
   /list/{listId}:
     get:
       summary: 欲しいものリストを取得する
-      operationId: "get wish list"
+      description: リストの共有にも使用できるlistIdを指定して、欲しいものリストを取得します。
+      operationId: getWishList
+      tags:
+        - wishList
       parameters:
         - name: listId
           in: path
