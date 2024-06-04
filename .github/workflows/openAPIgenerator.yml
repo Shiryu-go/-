@@ -2,7 +2,7 @@ name: Generate Spring Boot Code from OpenAPI Spec
 
 on:
   push:
-    branches: [docs]
+    branches: [main]
     paths: 外部設計/API定義/OpenAPI.yml
   workflow_dispatch: # 手動実行用の設定項目
 permissions:
@@ -28,7 +28,7 @@ jobs:
 
       - name: Generate Spring Boot code
         run: |
-          java -jar openapi-generator-cli.jar generate -i path/to/your/openapi.yaml -g spring -o generated-code
+          java -jar openapi-generator-cli.jar generate -i 外部設計/API定義/OpenAPI.yml -g spring -o generated-code
 
       - name: Commit and push generated code to new branch
         run: |
