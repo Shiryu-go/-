@@ -58,36 +58,36 @@ paths: #pathというのは、上の基本のURLに付属するURLを指定す�
               schema:
                 type: object
                 properties:
-                 listId:
-                   type: string
-                   description: リストのID
-                 items:
-                   type: array
-                   items:
-                     type: object
-                     properties:
-                       id:
-                         type: string
-                       name:
-                         type: string
-                       price:
-                         type: integer
-                   description: リストに含まれるアイテムのリスト
-                   example:
-                    - listId: abcdef123456
-                      items:
-                       - id: "0"
-                         name: "抹茶おれ"
-                         price: 150
-                       - id: "1"
-                         name: "iPhone 13 Pro"
-                         price: 1099
-                       - id: "2"
-                         name: 'MacBook Pro 16"'
-                         price: 2399
-                       - id: "3"
-                         name: "Sony WH-1000XM4 ワイヤレスノイズキャンセリングヘッドホン"
-                         price: 349
+                  listId:
+                    type: string
+                    description: リストのID
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        price:
+                          type: integer
+                    description: リストに含まれるアイテムのリスト
+                    example:
+                      - listId: abcdef123456
+                        items:
+                          - id: "0"
+                            name: "抹茶おれ"
+                            price: 150
+                          - id: "1"
+                            name: "iPhone 13 Pro"
+                            price: 1099
+                          - id: "2"
+                            name: 'MacBook Pro 16"'
+                            price: 2399
+                          - id: "3"
+                            name: "Sony WH-1000XM4 ワイヤレスノイズキャンセリングヘッドホン"
+                            price: 349
         "401":
           description: 認証エラー。アクセストークンが無効です。
         "404":
