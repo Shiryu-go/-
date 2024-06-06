@@ -1,0 +1,56 @@
+name: Generate TypeScript Types
+
+on:
+  push:
+    branches: [main]
+    paths: 外部設計/API定義/OpenAPI.yml
+  workflow_dispatch: # 手動実行用の設定項目
+permissions:
+  contents: write
+
+jobs:
+  generate-types:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Set branch name
+        id: set-branch-name
+        run: echo "::set-output name=branch::generated-code-TypeScript-$(date +%Y%m%d%H%M%S)"
+  
+
+      - name: Install OpenAPI Generator CLI
+        run: npm install @openapitools/openapi-generator-cli -g
+
+      - name: Generate TypeScript types
+        run: openapi-generator-cli generate -i openapi.yaml -g typescript-axios -o generated/ts
+
+      - name: Commit and push generated code to new branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH_NAME=${{ steps.set-branch-name.outputs.branch }}
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b $BRANCH_NAME
+          git add generated-code
+          git commit -m 'Generate Spring Boot code from OpenAPI spec'
+          git push origin $BRANCH_NAME
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Generate Spring Boot code from OpenAPI spec"
+          branch: ${{ steps.set-branch-name.outputs.branch }}
+          base: main
+          title: "Generate Spring Boot code from OpenAPI spec"
+          body: "This PR was automatically created by GitHub Actions to generate Spring Boot code from the OpenAPI spec."
+
