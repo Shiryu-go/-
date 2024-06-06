@@ -32,7 +32,7 @@ jobs:
 
       - name: Set branch name
         id: set-branch-name
-        run: echo "::set-output name=branch::generated-code-$(date +%Y%m%d%H%M%S)"
+        run: echo "::set-output name=branch::generated-code-SpringBoot-$(date +%Y%m%d%H%M%S)"
 
       - name: Commit and push generated code to new branch
         env:
